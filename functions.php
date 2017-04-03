@@ -10,32 +10,39 @@ function capfirst($word) {
   return $word;
 }
 
-function makeCoffee($theName, $theDrinks, $theCoffee, $theQuantity) {
-  if ($theCoffee != 'nothing' && $theQuantity > 0) {
+function scionPrice($theName, $scionModels, $theModel, $theQuantity) {
+  if ($theModel != 'nothing' && $theQuantity > 0) {
     $valid = true;
-    $price = $theDrinks[$theCoffee];
-    $total = $price * $theQuantity;
+    $price = $scionModels[$theModel];
+    $total = $price / $theQuantity;
+    
     if ($theQuantity < 2) {
-      $title = titlecase($theCoffee).' for '.$theName;
+      $title = titlecase($theModel).' for '.$theName;
       $theTotal = 'Total: $'.number_format($total, 2);
-      $description = $theName.' ordered '.$theQuantity.' '.$theCoffee.'.';
-    } elseif ($theQuantity > 50) {
-      $title = 'No '.titlecase($theCoffee).' for '.$theName;
-      $theCoffee = 'rediculous';
-      $description = 'Don&rsquo;t be rediculous, '.$theName.', that&rsquo;s more coffee than any one barista can ever brew on time! Also, you don&rsquo;t have $'.number_format($total, 2).'!';
-    } else {
-      $title = titlecase($theCoffee).' for '.$theName;
-      $theTotal = 'Total: $'.number_format($total, 2);
-      $description = $theName.' ordered '.number_format($theQuantity).' '.$theCoffee.'s.';
+      $description = $theName.' wants to buy '.$theModel.'.';
+    } 
+
+    elseif ($theQuantity > 50) {
+      $title = 'Sorry '.titlecase($theName).' we cannot split the order on ' .$thequantity 'transactions';
+      $theModel = 'Ooopps!';
+      $description = 'We&rsquo;re sorry,'.$theName.',thats too many cards for us to process maybe take alook at something less than $'.number_format($total, 2).'! Or maybe try Venmo!';
+    } 
+
+    else {
+      $title = .$theName 'is looking at ' titlecase($theModel).' for ';
+      $theTotal = 'Total: $'.number_format($total, 2)'.';
+      $description = $theName.' wants  '.number_format($theQuantity).' people to split the cost of the Scion'.$theModel.'.';
     }
-  } else {
+  } 
+
+  else {
     $valid = false;
   };
 
   if ($valid == true) {
     return('
       <div class="card my-4 mx-auto" style="width: 20rem;">
-        <img class="img-fluid" src="images/'.$theCoffee.'.jpg" alt="Card image cap">
+        <img class="img-fluid" src="images/'.$theModel.'.jpg" alt="Card image cap">
         <div class="card-block">
           <h2 class="h4 card-title">'.$title.'</h2>
           <p class="card-text">'.$description.'</p>
@@ -49,7 +56,7 @@ function makeCoffee($theName, $theDrinks, $theCoffee, $theQuantity) {
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <p class="m-0"><strong>Oops!</strong> Pick a drink.</p>
+        <p class="m-0"><strong>You need to select a model</strong> </p>
       </div>
     ');
   }
